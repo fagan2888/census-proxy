@@ -33,7 +33,9 @@ def call_census(params, get_vars):
     key = params.get('key')
     for_arg = params.get('for', '')
     in_arg = params.get('in', '')
-    api_url = 'http://api.census.gov/data/{}/acs{}?get=GEOID,{}&for={}&in={}&key={}'.format(year, est, get_vars, for_arg, in_arg, key)
+    if in_arg:
+        in_arg = '&in=' + in_arg
+    api_url = 'http://api.census.gov/data/{}/acs{}?get=GEOID,{}&for={}{}&key={}'.format(year, est, get_vars, for_arg, in_arg, key)
     return requests.get(api_url).json()
 
 @app.route('/')
